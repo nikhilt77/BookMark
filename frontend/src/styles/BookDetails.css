@@ -1,0 +1,32 @@
+.book-details {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.book-details-info {
+    display: flex;
+     align-items: flex-start;
+     margin-bottom: 20px
+}
+.book-details-info .book-cover {
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.book-details-info .book-info{
+  flex:1
+}
+.book-details-info .book-info h2{
+  margin-bottom: 10px
+}
+
+.book-details-info .book-info p {
+  margin-bottom: 5px
+}

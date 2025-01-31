@@ -1,0 +1,40 @@
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.book-item {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 220px;
+    text-align: left;
+}
+.book-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.book-cover {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+.book-info {
+    padding: 10px;
+}
+.book-info h2{
+    margin-bottom: 5px;
+     font-size: 1.1rem;
+}
+.book-info p {
+    color: #666;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+.book-link {
+     text-decoration: none;
+     color: inherit
+}

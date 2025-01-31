@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the root div covers the whole viewport height */
+  }
+  
+    main {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+         font-size: 1.2rem;
+    }
+
