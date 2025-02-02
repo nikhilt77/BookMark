@@ -1,7 +1,9 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database");
 
-const Book = sequelize.define('Book', {
+const Book = sequelize.define(
+  "Book",
+  {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -20,28 +22,29 @@ const Book = sequelize.define('Book', {
       allowNull: true,
     },
     isbn: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     publicationYear: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
     coverImage: {
-        type: DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
-    {
-        tableName: 'books',
-      });
+  {
+    tableName: "books",
+  },
+);
 
-  Book.associate = (models) => {
-    Book.hasMany(models.Review, {
-      foreignKey: 'bookId',
-      as: 'reviews',
-    });
-  };
-  
+Book.associate = (models) => {
+  Book.hasMany(models.Review, {
+    foreignKey: "bookId",
+    as: "reviews",
+  });
+};
+
 module.exports = Book;

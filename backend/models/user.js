@@ -1,7 +1,9 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database");
 
-const User = sequelize.define('User', {
+const User = sequelize.define(
+  "User",
+  {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -29,20 +31,20 @@ const User = sequelize.define('User', {
       allowNull: true,
     },
     lastName: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },
   {
-    tableName: 'users',
+    tableName: "users",
+  },
+);
+
+User.associate = (models) => {
+  User.hasMany(models.Review, {
+    foreignKey: "userId",
+    as: "reviews",
   });
-
-  User.associate = (models) => {
-    User.hasMany(models.Review, {
-      foreignKey: 'userId',
-      as: 'reviews',
-    });
-  };
-
+};
 
 module.exports = User;

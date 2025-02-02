@@ -1,36 +1,56 @@
-const express = require('express');
-const cors = require('cors')
-const routes = require('./routes');
-const errorHandler = require('./middleware/errorMiddleware');
-require('dotenv').config();
-const { sequelize } = require('./config/database');
+const express = require("express");
+const cors = require("cors");
+const routes = require("./routes");
+const errorHandler = require("./middleware/errorMiddleware");
+require("dotenv").config();
+const { sequelize } = require("./config/database");
 const app = express();
-
-const port = process.env.PORT || 5000;
-
+const db = require("./models");
+const path = require("path");
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Length", "X-Requested-With"],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+);
+
+// Other middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api', routes);
+// Add headers middleware as backup
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  );
+  res.header("Access-Control-Allow-Credentials", true);
 
-//Error Handling
-app.use(errorHandler)
+  // Handle OPTIONS method
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
 
-//Database Connection
-sequelize.authenticate()
-    .then(() => {
-        console.log('Database connection successful.');
-        sequelize.sync({alter: false}).then(() => {
-            console.log('Database synced successfully');
-             app.listen(port, () => {
-                console.log(`Server listening on port ${port}`);
-            });
-        });
-    })
-    .catch((err) => {
-        console.error('Unable to connect to the database:', err);
-    });
+// Your routes
+app.use("/api", routes);
 
-module.exports = app;
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Something went wrong!" });
+});
+
+const port = process.env.PORT || 5001;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
